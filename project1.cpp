@@ -137,6 +137,7 @@ class GraphDB {
 				delete[] myEdges;
 				myEdges = temp;
 
+				cout << numNodes;
 				// set GraphDB edge at numEdge index with node u, v and edge info
 				myEdges[numEdges].setu(&newEdge.getu());
 				myEdges[numEdges].setv(&newEdge.getv());
