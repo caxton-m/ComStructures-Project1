@@ -118,34 +118,31 @@ class GraphDB {
 		}
 		void setEdge(Edge& newEdge) {
 
-			if (numEdges < maxEdges) {
-				// set GraphDB edge at numEdge index with node u, v and edge info
-				myEdges[numEdges].setu(&newEdge.getu());
-				myEdges[numEdges].setv(&newEdge.getv());
-				myEdges[numEdges].setEdgeInfo(newEdge.getEdgeInfo());
+			// increase the numEdge index to go to the next one
+			numEdges++;
 
-				// increase the numEdge index to go to the next one
-				numEdges++;
-			}
-			else {
-				Edge* temp = new Edge[maxEdges + 5]();
+			if (numEdges >= maxEdges) {
 
+				// create a new temp array
+				Edge* temp = new Edge[maxEdges + (maxEdges/2)]();
+
+				// copy old values - deep copy
 				for (int i = 0; i < maxEdges; i++) {
 					temp[i] = myEdges[i];
 				}
 
-				delete[] myEdges;
-				myEdges = temp;
+				delete[] myEdges;  // delete the pointer to the old values
+				myEdges = temp;  // re point the pointer to the new memory location
 
-				cout << numNodes;
-				// set GraphDB edge at numEdge index with node u, v and edge info
-				myEdges[numEdges].setu(&newEdge.getu());
-				myEdges[numEdges].setv(&newEdge.getv());
-				myEdges[numEdges].setEdgeInfo(newEdge.getEdgeInfo());
+				maxEdges = maxEdges + (maxEdges / 2);  // update the value of maxEdges
 
-				// increase the numEdge index to go to the next one
-				numEdges++;
 			}
+			
+
+			// set GraphDB edge at numEdge index with node u, v and edge info
+			myEdges[numEdges - 1].setu(&newEdge.getu());
+			myEdges[numEdges - 1].setv(&newEdge.getv());
+			myEdges[numEdges - 1].setEdgeInfo(newEdge.getEdgeInfo());
 
 		}
 		void setNodeInfo(int u, string newInfo) {
